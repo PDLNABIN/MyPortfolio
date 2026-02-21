@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GeoAI Engineer — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --off: #f7f6f3;
+    --stone: #ede9e2;
+    --border: #e2ddd6;
+    --ink: #1a1a18;
+    --ink-mid: #5a5850;
+    --ink-light: #9b9690;
+    --accent: #2d6a4f;
+    --accent-light: #d8ede3;
+    --accent-mid: #52b788;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* PAGE TRANSITIONS */
+  .page { display: none; animation: pageFade 0.4s ease; }
+  .page.active { display: block; }
+  @keyframes pageFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 5rem;
+    background: rgba(255,255,255,0.93);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+  nav a, nav button.nav-link {
+    color: var(--ink-mid);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+    background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    padding: 0;
+  }
+  nav a:hover, nav button.nav-link:hover { color: var(--ink); }
+
+  .nav-cta {
+    padding: 0.55rem 1.3rem !important;
+    background: var(--ink) !important;
+    color: var(--white) !important;
+    border-radius: 100px !important;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent) !important; }
+
+  /* SHARED */
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 1.8rem;
+    border-radius: 100px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-dark { background: var(--ink); color: var(--white); }
+  .btn-dark:hover { background: var(--accent); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+  .btn-outline:hover { border-color: var(--ink); }
+  .btn-accent { background: var(--accent); color: var(--white); }
+  .btn-accent:hover { background: #1e4d38; }
+
+  .section-wrap { padding: 7rem 5rem; }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .eyebrow::before { content: ''; width: 1.5rem; height: 1.5px; background: var(--accent); }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
+  }
+  h2 em { font-style: italic; color: var(--accent); }
+
+  /* REVEAL ANIMATION */
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ════════════════════════════
+     HOME PAGE
+  ════════════════════════════ */
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+    padding: 8rem 5rem 5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-chip {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent-light); color: var(--accent);
+    font-size: 0.75rem; font-weight: 500;
+    padding: 0.4rem 0.9rem; border-radius: 100px; margin-bottom: 2rem;
+  }
+  .hero-chip::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--accent-mid); border-radius: 50%;
+    animation: blink 2s ease infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+    line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+
+  .hero-sub {
+    font-size: 1.05rem; color: var(--ink-mid); line-height: 1.7;
+    margin-bottom: 2.5rem; max-width: 440px; font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .hero-visual { position: relative; height: 480px; }
+
+  .geo-card {
+    background: var(--off); border: 1px solid var(--border);
+    border-radius: 1.5rem; padding: 2rem;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .geo-card-label {
+    font-size: 0.7rem; font-weight: 500; color: var(--ink-light);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .geo-map-svg { flex:1; display:flex; align-items:center; justify-content:center; padding: 1rem 0; }
+  .geo-stats {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;
+    padding-top: 1.5rem; border-top: 1px solid var(--border);
+  }
+  .geo-stat-val {
+    font-family: 'DM Serif Display', serif; font-size: 1.6rem;
+    color: var(--ink); letter-spacing: -0.02em; margin-bottom: 0.1rem;
+  }
+  .geo-stat-key { font-size: 0.68rem; color: var(--ink-light); }
+
+  .float-pill {
+    position: absolute; background: var(--white);
+    border: 1px solid var(--border); border-radius: 100px;
+    padding: 0.55rem 1rem; font-size: 0.72rem; font-weight: 500;
+    color: var(--ink); display: flex; align-items: center; gap: 0.4rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    animation: floatAnim 4s ease-in-out infinite;
+  }
+  .pill-dot { width:6px; height:6px; border-radius:50%; background: var(--accent-mid); }
+  .pill-top { top:1.5rem; right:1.5rem; }
+  .pill-bottom { bottom:7rem; left:1.5rem; animation-delay:-2s; }
+  @keyframes floatAnim { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+  /* ABOUT */
+  #about {
+    background: var(--off);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .about-grid { display:grid; grid-template-columns:1.1fr 1fr; gap:6rem; align-items:start; }
+  .about-body p { color:var(--ink-mid); line-height:1.85; font-size:0.95rem; font-weight:300; margin-bottom:1.2rem; }
+  .about-body p strong { color:var(--ink); font-weight:500; }
+  .about-skills { display:flex; flex-direction:column; gap:0.75rem; }
+
+  .skill-row {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1rem 1.2rem; background:var(--white); border:1px solid var(--border);
+    border-radius:0.75rem; transition:border-color 0.2s, box-shadow 0.2s;
+  }
+  .skill-row:hover { border-color:var(--accent-mid); box-shadow:0 2px 16px rgba(45,106,79,0.07); }
+  .skill-row-left { display:flex; align-items:center; gap:0.75rem; }
+  .skill-icon { width:32px; height:32px; background:var(--accent-light); border-radius:0.5rem; display:flex; align-items:center; justify-content:center; font-size:0.9rem; }
+  .skill-row-name { font-size:0.875rem; font-weight:500; color:var(--ink); display:block; margin-bottom:0.1rem; }
+  .skill-row-tools { font-size:0.72rem; color:var(--ink-light); }
+  .skill-badge { font-size:0.65rem; font-weight:600; letter-spacing:0.05em; padding:0.25rem 0.6rem; border-radius:100px; background:var(--accent-light); color:var(--accent); text-transform:uppercase; }
+
+  /* PROJECTS LIST */
+  #projects { border-bottom: 1px solid var(--border); }
+  .section-intro { color:var(--ink-mid); font-size:1rem; max-width:560px; line-height:1.75; font-weight:300; margin-bottom:4rem; }
+
+  .projects-list { border:1px solid var(--border); border-radius:1rem; overflow:hidden; }
+
+  .project-row {
+    display:grid; grid-template-columns:3rem 1fr auto;
+    align-items:start; gap:2rem; padding:2rem 2.5rem;
+    border-bottom:1px solid var(--border);
+    transition:background 0.2s; cursor:pointer;
+  }
+  .project-row:last-child { border-bottom:none; }
+  .project-row:hover { background:var(--off); }
+
+  .project-num-badge {
+    width:2.5rem; height:2.5rem; border-radius:0.5rem;
+    background:var(--stone); display:flex; align-items:center; justify-content:center;
+    font-size:0.7rem; font-weight:600; color:var(--ink-mid);
+    flex-shrink:0; margin-top:0.15rem; transition:background 0.2s, color 0.2s;
+  }
+  .project-row:hover .project-num-badge { background:var(--accent-light); color:var(--accent); }
+
+  .project-title {
+    font-family:'DM Serif Display',serif; font-size:1.25rem;
+    letter-spacing:-0.015em; margin-bottom:0.5rem;
+  }
+  .project-desc { font-size:0.875rem; color:var(--ink-mid); line-height:1.7; font-weight:300; max-width:580px; margin-bottom:1rem; }
+  .project-tags { display:flex; flex-wrap:wrap; gap:0.4rem; }
+  .tag { font-size:0.68rem; font-weight:500; padding:0.25rem 0.65rem; border-radius:100px; background:var(--stone); color:var(--ink-mid); }
+  .project-arrow { color:var(--ink-light); font-size:1.2rem; margin-top:0.25rem; transition:transform 0.2s, color 0.2s; }
+  .project-row:hover .project-arrow { transform:translate(3px,-3px); color:var(--accent); }
+
+  /* EXPERIENCE */
+  #experience { background:var(--off); border-bottom:1px solid var(--border); }
+  .exp-grid { display:grid; grid-template-columns:1fr 2fr; gap:6rem; align-items:start; }
+  .exp-left p { color:var(--ink-mid); font-size:0.9rem; font-weight:300; line-height:1.75; margin-top:1rem; }
+  .exp-item { display:grid; grid-template-columns:140px 1fr; gap:2rem; padding:2rem 0; border-bottom:1px solid var(--border); }
+  .exp-item:first-child { padding-top:0; }
+  .exp-item:last-child { border-bottom:none; }
+  .exp-date { font-size:0.75rem; font-weight:500; color:var(--ink-light); padding-top:0.2rem; }
+  .exp-date strong { display:block; color:var(--accent); font-size:0.8rem; margin-bottom:0.1rem; }
+  .exp-role { font-family:'DM Serif Display',serif; font-size:1.2rem; letter-spacing:-0.015em; margin-bottom:0.2rem; }
+  .exp-company { font-size:0.8rem; color:var(--ink-light); margin-bottom:0.85rem; }
+  .exp-desc { font-size:0.875rem; color:var(--ink-mid); line-height:1.75; font-weight:300; }
+
+  /* CONTACT */
+  #contact { text-align:center; }
+  #contact .section-wrap { max-width:680px; margin:0 auto; }
+  .contact-sub { color:var(--ink-mid); font-size:1rem; font-weight:300; line-height:1.75; margin-bottom:2.5rem; }
+  .contact-links { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-bottom:3rem; }
+  .contact-divider { width:3rem; height:1px; background:var(--border); margin:2.5rem auto; }
+  .contact-email { font-family:'DM Serif Display',serif; font-size:1.4rem; color:var(--ink); text-decoration:none; letter-spacing:-0.02em; transition:color 0.2s; }
+  .contact-email:hover { color:var(--accent); }
+
+  /* FOOTER */
+  footer {
+    background:var(--ink); color:rgba(255,255,255,0.4);
+    padding:2rem 5rem; display:flex; justify-content:space-between; align-items:center; font-size:0.78rem;
+  }
+  .footer-logo { font-family:'DM Serif Display',serif; color:white; text-decoration:none; font-size:1rem; cursor:pointer; background:none; border:none; }
+
+  /* ════════════════════════════
+     PROJECT DETAIL PAGE
+  ════════════════════════════ */
+  #page-project { padding-top: 5rem; }
+
+  .project-hero {
+    padding: 5rem 5rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--off);
+  }
+
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8rem; font-weight: 500; color: var(--ink-mid);
+    cursor: pointer; background: none; border: none;
+    font-family: 'DM Sans', sans-serif;
+    margin-bottom: 2.5rem; transition: color 0.2s; padding: 0;
+  }
+  .back-btn:hover { color: var(--accent); }
+  .back-btn svg { transition: transform 0.2s; }
+  .back-btn:hover svg { transform: translateX(-3px); }
+
+  .project-hero-meta {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+  }
+
+  .project-num-label {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-light);
+  }
+
+  .project-status {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--accent-light); color: var(--accent);
+    font-size: 0.7rem; font-weight: 600; padding: 0.3rem 0.75rem;
+    border-radius: 100px; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .project-status::before {
+    content: ''; width: 5px; height: 5px;
+    background: var(--accent-mid); border-radius: 50%;
+  }
+
+  .project-hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    line-height: 1.1; letter-spacing: -0.03em;
+    margin-bottom: 1.5rem; color: var(--ink);
+  }
+
+  .project-hero-sub {
+    font-size: 1.05rem; color: var(--ink-mid);
+    line-height: 1.75; max-width: 640px; font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .project-hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .tag-lg {
+    font-size: 0.75rem; font-weight: 500;
+    padding: 0.4rem 0.9rem; border-radius: 100px;
+    background: var(--white); border: 1px solid var(--border);
+    color: var(--ink-mid);
+  }
+
+  /* Project detail body */
+  .project-body-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 5rem;
+    padding: 5rem;
+    align-items: start;
+  }
+
+  .project-content h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem; letter-spacing: -0.02em;
+    margin-bottom: 1rem; margin-top: 2.5rem; color: var(--ink);
+  }
+  .project-content h3:first-child { margin-top: 0; }
+
+  .project-content p {
+    color: var(--ink-mid); font-size: 0.95rem; line-height: 1.85;
+    font-weight: 300; margin-bottom: 1rem;
+  }
+
+  .project-content ul {
+    list-style: none; margin-bottom: 1.5rem;
+    display: flex; flex-direction: column; gap: 0.6rem;
+  }
+
+  .project-content ul li {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    font-size: 0.9rem; color: var(--ink-mid); font-weight: 300; line-height: 1.6;
+  }
+
+  .project-content ul li::before {
+    content: '→'; color: var(--accent); font-weight: 600; flex-shrink: 0; margin-top: 0.05rem;
+  }
+
+  /* Sidebar */
+  .project-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .sidebar-card {
+    background: var(--off); border: 1px solid var(--border);
+    border-radius: 1rem; padding: 1.5rem;
+  }
+
+  .sidebar-card-title {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem;
+  }
+
+  .meta-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.7rem 0; border-bottom: 1px solid var(--border);
+    font-size: 0.82rem;
+  }
+  .meta-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .meta-label { color: var(--ink-light); font-weight: 400; }
+  .meta-val { color: var(--ink); font-weight: 500; }
+
+  .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .metric-item { text-align: center; }
+  .metric-val {
+    font-family: 'DM Serif Display', serif; font-size: 1.8rem;
+    color: var(--accent); letter-spacing: -0.02em; margin-bottom: 0.2rem;
+  }
+  .metric-label { font-size: 0.68rem; color: var(--ink-light); }
+
+  /* Divider illustration */
+  .project-vis {
+    background: var(--off); border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 5rem;
+    display: flex; align-items: center; justify-content: center;
+    gap: 3rem; flex-wrap: wrap;
+  }
+
+  .vis-step {
+    display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+    text-align: center; max-width: 120px;
+  }
+  .vis-icon {
+    width: 56px; height: 56px; border-radius: 1rem;
+    background: var(--white); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+  }
+  .vis-label { font-size: 0.72rem; color: var(--ink-mid); font-weight: 500; }
+
+  .vis-arrow { color: var(--border); font-size: 1.4rem; margin-top: -16px; }
+
+  /* Next project */
+  .next-project {
+    padding: 4rem 5rem; display: flex; justify-content: space-between;
+    align-items: center; border-top: 1px solid var(--border);
+    cursor: pointer; transition: background 0.2s;
+  }
+  .next-project:hover { background: var(--off); }
+  .next-label { font-size: 0.72rem; color: var(--ink-light); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .next-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; letter-spacing: -0.02em; }
+  .next-arrow { font-size: 2rem; color: var(--ink-light); transition: transform 0.2s, color 0.2s; }
+  .next-project:hover .next-arrow { transform: translate(6px, 0); color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav { padding: 1.2rem 2rem; }
+    .section-wrap { padding: 5rem 2rem; }
+    #hero { grid-template-columns: 1fr; padding: 7rem 2rem 4rem; min-height: auto; }
+    .hero-visual { height: 320px; }
+    .about-grid, .exp-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .project-hero { padding: 4rem 2rem 3rem; }
+    .project-body-grid { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 2rem; }
+    .project-vis { padding: 2rem; }
+    .next-project { padding: 3rem 2rem; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 2rem; }
+  }
+
+  @media (max-width: 600px) {
+    nav ul { display: none; }
+    h1 { font-size: 2.4rem; }
+    .project-row { grid-template-columns: 2.5rem 1fr; }
+    .project-arrow { display: none; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.4rem; }
+    .metric-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo" onclick="showHome()">Your Name <span>· GeoAI</span></span>
+  <ul>
+    <li><button class="nav-link" onclick="showHome(); scrollTo('#about')">About</button></li>
+    <li><button class="nav-link" onclick="showHome(); scrollTo('#projects')">Projects</button></li>
+    <li><button class="nav-link" onclick="showHome(); scrollTo('#experience')">Experience</button></li>
+    <li><button class="nav-cta" onclick="showHome(); scrollTo('#contact')">Contact</button></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════
+     HOME PAGE
+═══════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-left reveal">
+      <div class="hero-chip">Available for projects</div>
+      <h1>Geomatics Engineer &<br><em>GeoAI</em> Specialist</h1>
+      <p class="hero-sub">Building intelligent geospatial systems — from deep learning on satellite imagery to LiDAR analysis, drone mapping, and earth observation pipelines.</p>
+      <div class="hero-actions">
+        <button class="btn btn-dark" onclick="scrollTo('#projects')">View Projects</button>
+        <button class="btn btn-outline" onclick="scrollTo('#contact')">Get in Touch</button>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="geo-card">
+        <div class="geo-card-label">Spatial Coverage · 2024</div>
+        <div class="float-pill pill-top"><span class="pill-dot"></span> Model Running</div>
+        <div class="float-pill pill-bottom"><span class="pill-dot"></span> 27.72°N 85.32°E</div>
+        <div class="geo-map-svg">
+          <svg width="280" height="200" viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="50" x2="280" y2="50" stroke="#e2ddd6" stroke-width="1"/>
+            <line x1="0" y1="100" x2="280" y2="100" stroke="#e2ddd6" stroke-width="1"/>
+            <line x1="0" y1="150" x2="280" y2="150" stroke="#e2ddd6" stroke-width="1"/>
+            <line x1="56" y1="0" x2="56" y2="200" stroke="#e2ddd6" stroke-width="1"/>
+            <line x1="112" y1="0" x2="112" y2="200" stroke="#e2ddd6" stroke-width="1"/>
+            <line x1="168" y1="0" x2="168" y2="200" stroke="#e2ddd6" stroke-width="1"/>
+            <line x1="224" y1="0" x2="224" y2="200" stroke="#e2ddd6" stroke-width="1"/>
+            <path d="M20 160 Q60 140 90 120 Q130 95 160 110 Q190 125 220 100 Q250 75 270 80" stroke="#d8ede3" stroke-width="2" fill="none"/>
+            <path d="M10 130 Q55 115 85 95 Q125 70 158 82 Q192 95 222 70 Q252 48 275 55" stroke="#52b788" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <path d="M0 100 Q50 88 80 68 Q120 44 156 54 Q190 64 222 40 Q254 18 280 25" stroke="#2d6a4f" stroke-width="1.5" fill="none" opacity="0.4"/>
+            <circle cx="90" cy="120" r="4" fill="#2d6a4f" opacity="0.9"/>
+            <circle cx="90" cy="120" r="10" fill="#2d6a4f" opacity="0.15"/>
+            <circle cx="160" cy="110" r="3" fill="#52b788" opacity="0.8"/>
+            <circle cx="160" cy="110" r="8" fill="#52b788" opacity="0.12"/>
+            <circle cx="222" cy="100" r="4" fill="#2d6a4f" opacity="0.7"/>
+            <circle cx="140" cy="60" r="3" fill="#52b788" opacity="0.6"/>
+            <circle cx="90" cy="120" r="18" stroke="#2d6a4f" stroke-width="1" stroke-dasharray="3 4" opacity="0.4"/>
+            <line x1="82" y1="120" x2="98" y2="120" stroke="#2d6a4f" stroke-width="1" opacity="0.5"/>
+            <line x1="90" y1="112" x2="90" y2="128" stroke="#2d6a4f" stroke-width="1" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="geo-stats">
+          <div><div class="geo-stat-val">6+</div><div class="geo-stat-key">Projects</div></div>
+          <div><div class="geo-stat-val">4yr</div><div class="geo-stat-key">Experience</div></div>
+          <div><div class="geo-stat-val">GeoAI</div><div class="geo-stat-key">Speciality</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-wrap">
+      <div class="about-grid">
+        <div>
+          <div class="eyebrow reveal">About</div>
+          <h2 class="reveal">Geospatial meets <em>intelligence</em></h2>
+          <div class="about-body reveal">
+            <p>I'm a <strong>Geomatics Engineer</strong> currently working as a GeoAI specialist — applying machine learning and deep learning to solve complex spatial problems.</p>
+            <p>My work sits at the intersection of <strong>remote sensing, computer vision, and spatial data engineering</strong>. I build systems that help people understand our planet better — from automated satellite imagery analysis to intelligent mapping pipelines.</p>
+            <p>I'm based in <strong>Kathmandu, Nepal</strong> and work on projects spanning environmental monitoring, urban analysis, disaster response, and smart infrastructure.</p>
+          </div>
+        </div>
+        <div class="about-skills reveal">
+          <div class="skill-row"><div class="skill-row-left"><div class="skill-icon">🛰️</div><div><span class="skill-row-name">Remote Sensing</span><span class="skill-row-tools">SAR · Multispectral · Hyperspectral</span></div></div><span class="skill-badge">Core</span></div>
+          <div class="skill-row"><div class="skill-row-left"><div class="skill-icon">🤖</div><div><span class="skill-row-name">Deep Learning / GeoAI</span><span class="skill-row-tools">PyTorch · U-Net · ViT · YOLO</span></div></div><span class="skill-badge">Core</span></div>
+          <div class="skill-row"><div class="skill-row-left"><div class="skill-icon">🗺️</div><div><span class="skill-row-name">GIS & Spatial Analysis</span><span class="skill-row-tools">QGIS · GeoPandas · PostGIS</span></div></div><span class="skill-badge">Expert</span></div>
+          <div class="skill-row"><div class="skill-row-left"><div class="skill-icon">✈️</div><div><span class="skill-row-name">Drone & Photogrammetry</span><span class="skill-row-tools">SfM · Orthomosaic · DSM</span></div></div><span class="skill-badge">Expert</span></div>
+          <div class="skill-row"><div class="skill-row-left"><div class="skill-icon">📡</div><div><span class="skill-row-name">LiDAR & Point Cloud</span><span class="skill-row-tools">PDAL · CloudCompare · Open3D</span></div></div><span class="skill-badge">Advanced</span></div>
+          <div class="skill-row"><div class="skill-row-left"><div class="skill-icon">🌍</div><div><span class="skill-row-name">Earth Observation</span><span class="skill-row-tools">GEE · Sentinel · Landsat · Planet</span></div></div><span class="skill-badge">Advanced</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-wrap">
+      <div class="eyebrow reveal">Selected Work</div>
+      <h2 class="reveal">Projects & <em>Research</em></h2>
+      <p class="section-intro reveal">A selection of GeoAI projects spanning earth observation, spatial ML, drone mapping, and intelligent geospatial systems. Click any project to explore in detail.</p>
+      <div class="projects-list reveal" id="projects-list"></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-wrap">
+      <div class="exp-grid">
+        <div>
+          <div class="eyebrow reveal">Experience</div>
+          <h2 class="reveal">Career <em>Timeline</em></h2>
+          <p class="reveal">From foundational geomatics engineering to cutting-edge GeoAI — a journey through spatial science and machine learning.</p>
+        </div>
+        <div>
+          <div class="exp-item reveal">
+            <div class="exp-date"><strong>Current</strong>2024 — Present</div>
+            <div>
+              <div class="exp-role">GeoAI Engineer</div>
+              <div class="exp-company">Nepal · Full Time</div>
+              <div class="exp-desc">Developing AI-powered geospatial workflows — satellite imagery deep learning, earth observation model training, and intelligent spatial data pipelines for large-scale geographic analysis.</div>
+            </div>
+          </div>
+          <div class="exp-item reveal">
+            <div class="exp-date">2022 — 2024</div>
+            <div>
+              <div class="exp-role">Geomatics Engineer</div>
+              <div class="exp-company">Geospatial & Mapping Services</div>
+              <div class="exp-desc">Drone survey campaigns, photogrammetric processing, LiDAR acquisition and analysis, GIS database management, and spatial analysis for infrastructure and environmental projects.</div>
+            </div>
+          </div>
+          <div class="exp-item reveal">
+            <div class="exp-date">2018 — 2022</div>
+            <div>
+              <div class="exp-role">B.E. Geomatics Engineering</div>
+              <div class="exp-company">Kathmandu University · Nepal</div>
+              <div class="exp-desc">Surveying, remote sensing, GIS, photogrammetry, geodesy, and spatial data infrastructure. Final year project focused on deep learning for automated feature extraction from aerial imagery.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-wrap">
+      <div class="eyebrow reveal" style="justify-content:center;">Contact</div>
+      <h2 class="reveal">Let's work <em>together</em></h2>
+      <p class="contact-sub reveal">Open to GeoAI collaborations, research partnerships,<br>and freelance geospatial engineering projects.</p>
+      <div class="contact-links reveal">
+        <a href="mailto:your@email.com" class="btn btn-dark">Send Email</a>
+        <a href="https://linkedin.com" target="_blank" class="btn btn-outline">LinkedIn</a>
+        <a href="https://github.com" target="_blank" class="btn btn-outline">GitHub</a>
+      </div>
+      <div class="contact-divider"></div>
+      <a href="mailto:your@email.com" class="contact-email reveal">your@email.com</a>
+    </div>
+  </section>
+
+  <footer>
+    <button class="footer-logo" onclick="showHome()">GeoAI Engineer</button>
+    <span>Kathmandu, Nepal</span>
+    <span>© 2026</span>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════
+     PROJECT DETAIL PAGE
+═══════════════════════════════════ -->
+<div id="page-project" class="page">
+  <div id="project-detail-content"></div>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────
+const projects = [
+  {
+    id: 'flood-sar',
+    num: '01',
+    title: 'Flood Extent Mapping with SAR Imagery',
+    short: 'Automated flood detection pipeline using Sentinel-1 SAR data and change detection algorithms, deployed for near-real-time disaster response and emergency planning.',
+    status: 'Completed',
+    tags: ['SAR', 'Sentinel-1', 'Google Earth Engine', 'Python', 'Disaster Response'],
+    year: '2024',
+    role: 'Lead Engineer',
+    domain: 'Disaster Management',
+    overview: `This project developed an end-to-end automated flood extent mapping system using Sentinel-1 Synthetic Aperture Radar (SAR) imagery. Unlike optical imagery, SAR can penetrate cloud cover — making it ideal for flood monitoring during storm events when optical data is unavailable.`,
+    challenge: `Traditional flood mapping relies on optical imagery, which is often obscured by clouds during actual flood events. This creates a critical gap in real-time disaster response capabilities, especially in South Asia where monsoon flooding causes devastating losses annually.`,
+    approach: [
+      'Acquired pre-flood and post-flood Sentinel-1 GRD imagery via Google Earth Engine API',
+      'Applied speckle filtering (Lee filter) to reduce SAR noise before analysis',
+      'Computed backscatter change between temporal images to identify inundated areas',
+      'Applied Otsu thresholding for binary flood/non-flood classification',
+      'Incorporated elevation data (SRTM DEM) to eliminate false positives in shadow areas',
+      'Generated vector outputs and automated alert reports for emergency response teams'
+    ],
+    results: [
+      'Achieved 91% overall accuracy validated against Copernicus EMS reference data',
+      'Reduced flood mapping time from days to under 2 hours post-event',
+      'Pipeline deployed for monitoring 3 river basins in Nepal',
+      'Outputs integrated into provincial disaster management dashboards'
+    ],
+    metrics: [{ val: '91%', label: 'Accuracy' }, { val: '<2h', label: 'Processing Time' }, { val: '3', label: 'River Basins' }, { val: '100+', label: 'km² Mapped' }],
+    stack: [
+      { label: 'Platform', val: 'Google Earth Engine' },
+      { label: 'Imagery', val: 'Sentinel-1 SAR' },
+      { label: 'Language', val: 'Python / GEE JS' },
+      { label: 'Output', val: 'GeoJSON / GeoTIFF' }
+    ],
+    pipeline: [
+      { icon: '🛰️', label: 'SAR Acquisition' },
+      { icon: '🔧', label: 'Preprocessing' },
+      { icon: '📊', label: 'Change Detection' },
+      { icon: '🗺️', label: 'Classification' },
+      { icon: '📤', label: 'Export & Alert' }
+    ]
+  },
+  {
+    id: 'lulc-unet',
+    num: '02',
+    title: 'Land Use Classification via U-Net Segmentation',
+    short: 'U-Net based semantic segmentation model trained on high-resolution drone imagery to classify land use and land cover categories with 93% accuracy across complex terrain.',
+    status: 'Completed',
+    tags: ['U-Net', 'PyTorch', 'Drone Imagery', 'LULC', 'Semantic Segmentation'],
+    year: '2024',
+    role: 'ML Engineer',
+    domain: 'Land Management',
+    overview: `A deep learning pipeline for automated Land Use Land Cover (LULC) classification using U-Net architecture trained on high-resolution UAV orthomosaic imagery. The model classifies terrain into 8 distinct categories across complex Himalayan foothills landscape.`,
+    challenge: `Manual LULC mapping in mountainous Nepal is time-consuming, expensive, and difficult to update regularly. Existing satellite-based classifiers struggle with the mixed pixel problem at coarse resolutions, missing fine-grained features critical for local planning.`,
+    approach: [
+      'Collected and processed 2cm GSD drone orthomosaic imagery across 500 hectares',
+      'Manually annotated 1,200 image chips (512×512px) across 8 LULC classes',
+      'Implemented U-Net with ResNet-34 encoder backbone in PyTorch with data augmentation',
+      'Applied transfer learning from ImageNet pretrained weights for faster convergence',
+      'Trained with combined Binary Cross-Entropy + Dice Loss for handling class imbalance',
+      'Post-processed outputs with morphological operations to clean boundary artifacts'
+    ],
+    results: [
+      '93.2% overall accuracy and 0.89 mean IoU across all 8 LULC classes',
+      'Inference time of 4 seconds per km² on GPU, 40x faster than manual delineation',
+      'Results used by local municipality for land use planning and taxation',
+      'Model generalized well to unseen areas with <5% accuracy drop'
+    ],
+    metrics: [{ val: '93%', label: 'Accuracy' }, { val: '0.89', label: 'Mean IoU' }, { val: '8', label: 'Classes' }, { val: '500ha', label: 'Area Mapped' }],
+    stack: [
+      { label: 'Framework', val: 'PyTorch' },
+      { label: 'Architecture', val: 'U-Net + ResNet-34' },
+      { label: 'Data', val: 'UAV Orthomosaic' },
+      { label: 'Resolution', val: '2cm GSD' }
+    ],
+    pipeline: [
+      { icon: '✈️', label: 'Drone Survey' },
+      { icon: '🖼️', label: 'Annotation' },
+      { icon: '🧠', label: 'Model Training' },
+      { icon: '🔍', label: 'Inference' },
+      { icon: '📋', label: 'LULC Map' }
+    ]
+  },
+  {
+    id: 'lidar-3d',
+    num: '03',
+    title: '3D Building Reconstruction from LiDAR',
+    short: 'Point cloud processing pipeline to automatically extract building footprints and generate LoD2 3D city models from airborne LiDAR for urban planning applications.',
+    status: 'Completed',
+    tags: ['LiDAR', 'Point Cloud', 'PDAL', '3D GIS', 'Urban Planning', 'CityGML'],
+    year: '2023',
+    role: 'Geomatics Engineer',
+    domain: 'Urban Planning',
+    overview: `An automated pipeline to process raw airborne LiDAR point clouds into detailed LoD2 (Level of Detail 2) 3D city models, including roof structure geometry. The outputs conform to CityGML standards for integration with smart city platforms.`,
+    challenge: `Municipal authorities needed up-to-date 3D building models for floor area ratio enforcement, shadow analysis, and solar potential mapping. Manual 3D modeling of thousands of buildings was prohibitively expensive and slow.`,
+    approach: [
+      'Classified raw LiDAR point clouds (ground, building, vegetation) using PDAL pipelines',
+      'Extracted building footprints via alpha-shape algorithm on building-class points',
+      'Reconstructed roof planes using RANSAC plane fitting on above-ground points per building',
+      'Generated LoD2 solid geometry with correct eave and ridge lines using custom Python scripts',
+      'Exported CityGML and 3D Tiles for web visualization and GIS integration',
+      'Validated against reference manual models — <30cm RMSE on building height'
+    ],
+    results: [
+      'Automated 3D modeling of 4,200 buildings in a pilot municipal area',
+      'Average processing time of 8 minutes per 1km² tile on a standard workstation',
+      'Height accuracy RMSE of 28cm against ground-truth measurements',
+      '3D models integrated into the city\'s urban digital twin platform'
+    ],
+    metrics: [{ val: '4,200', label: 'Buildings' }, { val: '28cm', label: 'Height RMSE' }, { val: 'LoD2', label: 'Detail Level' }, { val: '8min', label: 'Per km²' }],
+    stack: [
+      { label: 'Processing', val: 'PDAL + Python' },
+      { label: 'Classification', val: 'Random Forest' },
+      { label: 'Reconstruction', val: 'RANSAC / Alpha Shape' },
+      { label: 'Output', val: 'CityGML / 3D Tiles' }
+    ],
+    pipeline: [
+      { icon: '📡', label: 'LiDAR Scan' },
+      { icon: '🔧', label: 'Classification' },
+      { icon: '🏠', label: 'Footprint Extraction' },
+      { icon: '📐', label: 'Roof Modeling' },
+      { icon: '🏙️', label: '3D City Model' }
+    ]
+  },
+  {
+    id: 'road-extraction',
+    num: '04',
+    title: 'Road Network Extraction from Satellite Imagery',
+    short: 'Deep learning pipeline using DeepLabV3+ for automated road extraction, contributing to OpenStreetMap in data-scarce regions across South Asia.',
+    status: 'Completed',
+    tags: ['DeepLabV3+', 'Segmentation', 'OpenStreetMap', 'High-Res Imagery', 'Python'],
+    year: '2023',
+    role: 'ML Engineer',
+    domain: 'Infrastructure Mapping',
+    overview: `A deep learning pipeline for automated road network extraction from high-resolution satellite imagery, designed to accelerate OpenStreetMap contributions in remote and data-scarce regions of South Asia where road networks are critically undermapped.`,
+    challenge: `Many rural and mountainous areas of Nepal lack accurate road mapping, limiting emergency access planning, logistics, and development. Manual OSM digitization is slow, and volunteers are concentrated in urban areas — leaving large rural gaps.`,
+    approach: [
+      'Curated training dataset from SpaceNet Road Detection challenge and locally labeled tiles',
+      'Fine-tuned DeepLabV3+ with MobileNetV3 backbone for efficient inference',
+      'Applied road-specific augmentations: elastic deformation, random rotation, brightness shifts',
+      'Post-processed binary masks with skeletonization and Douglas-Peucker simplification',
+      'Converted vectorized outputs to OSM-compatible format for community review and upload',
+      'Deployed model as a tile-based inference service for scalable coverage'
+    ],
+    results: [
+      'F1 score of 0.83 on SpaceNet evaluation benchmark',
+      'Contributed extracted roads for 12 VDC areas to OpenStreetMap',
+      'Pipeline processes 1 tile (256km²) in under 3 minutes on GPU',
+      'Outputs used as base layer for humanitarian logistics routing'
+    ],
+    metrics: [{ val: '0.83', label: 'F1 Score' }, { val: '12', label: 'VDCs Mapped' }, { val: '<3min', label: 'Per Tile' }, { val: 'OSM', label: 'Contributed' }],
+    stack: [
+      { label: 'Architecture', val: 'DeepLabV3+' },
+      { label: 'Backbone', val: 'MobileNetV3' },
+      { label: 'Imagery', val: 'Planet / Maxar' },
+      { label: 'Output', val: 'OSM GeoJSON' }
+    ],
+    pipeline: [
+      { icon: '🛰️', label: 'Satellite Tile' },
+      { icon: '🧠', label: 'DL Inference' },
+      { icon: '📏', label: 'Vectorization' },
+      { icon: '✅', label: 'QA Review' },
+      { icon: '🗺️', label: 'OSM Upload' }
+    ]
+  },
+  {
+    id: 'change-detection',
+    num: '05',
+    title: 'Urban Change Detection — Siamese Network',
+    short: 'Multi-temporal satellite analysis using Siamese networks to track urban expansion and informal settlement growth over decade-long timescales for policy research.',
+    status: 'Completed',
+    tags: ['Siamese Network', 'Change Detection', 'Landsat', 'Urban Growth', 'PyTorch'],
+    year: '2024',
+    role: 'Research Engineer',
+    domain: 'Urban Studies',
+    overview: `A Siamese convolutional neural network for bi-temporal change detection in satellite imagery, applied to map a decade of urban growth and informal settlement expansion across major Nepali cities using Landsat 7/8/9 and Sentinel-2 time series.`,
+    challenge: `Rapid unplanned urbanization creates significant risks for infrastructure planning and environmental management. Manually tracking change across decade-long satellite archives across multiple cities was infeasible without automated deep learning approaches.`,
+    approach: [
+      'Assembled bi-temporal image pairs (2013–2024) from Landsat and Sentinel-2 archives via GEE',
+      'Designed Siamese CNN architecture with shared weights and concatenated feature difference maps',
+      'Trained on LEVIR-CD and custom Kathmandu Valley change annotation dataset',
+      'Applied attention mechanisms to improve sensitivity to small informal structure changes',
+      'Produced annual change maps and quantified expansion rates per urban zone',
+      'Validated against high-resolution reference imagery and field surveys'
+    ],
+    results: [
+      'Overall accuracy of 94.1% on held-out test tiles with F1 of 0.87 for change class',
+      'Detected and mapped 11 years of urban expansion across 3 cities',
+      'Identified 42 new informal settlement clusters not in official records',
+      'Results published in collaboration with urban planning department'
+    ],
+    metrics: [{ val: '94%', label: 'Accuracy' }, { val: '11yr', label: 'Time Span' }, { val: '3', label: 'Cities' }, { val: '42', label: 'New Clusters' }],
+    stack: [
+      { label: 'Architecture', val: 'Siamese CNN' },
+      { label: 'Data', val: 'Landsat + Sentinel-2' },
+      { label: 'Platform', val: 'Google Earth Engine' },
+      { label: 'Framework', val: 'PyTorch' }
+    ],
+    pipeline: [
+      { icon: '📅', label: 'Archive Pull' },
+      { icon: '🔄', label: 'Image Pairing' },
+      { icon: '🧠', label: 'Siamese Net' },
+      { icon: '📈', label: 'Change Map' },
+      { icon: '📊', label: 'Trend Analysis' }
+    ]
+  },
+  {
+    id: 'ndvi-dashboard',
+    num: '06',
+    title: 'Vegetation Health Monitoring Dashboard',
+    short: 'Interactive geospatial platform computing NDVI, EVI, and LAI indices from Sentinel-2 imagery with time-series analytics for agricultural and environmental monitoring.',
+    status: 'Ongoing',
+    tags: ['Sentinel-2', 'NDVI', 'WebGIS', 'Agriculture', 'Time Series', 'GEE'],
+    year: '2024–Present',
+    role: 'Full-Stack GeoAI Dev',
+    domain: 'Agriculture / Environment',
+    overview: `An interactive web-based geospatial dashboard for vegetation health monitoring, computing NDVI, EVI, SAVI, and LAI indices from Sentinel-2 imagery. The platform provides time-series analytics and anomaly alerts for agricultural field management and environmental monitoring programs.`,
+    challenge: `Smallholder farmers and district agriculture offices in Nepal lacked accessible tools to monitor crop health from satellite data. Existing platforms (e.g. GEE) required programming expertise, creating a technical barrier for non-GIS stakeholders.`,
+    approach: [
+      'Built GEE backend to compute spectral indices from cloud-masked Sentinel-2 composites',
+      'Designed REST API layer to serve dynamic map tiles and time-series data by polygon',
+      'Developed responsive web interface with Leaflet.js map and Chart.js time-series panel',
+      'Implemented Z-score anomaly detection to flag unusual vegetation stress periods',
+      'Added district-level aggregation and downloadable CSV/PDF reports for agriculture officers',
+      'Integrated crop calendar to contextualize indices against known phenological stages'
+    ],
+    results: [
+      'Dashboard actively used by 3 district agriculture offices for seasonal monitoring',
+      'Covers 120,000+ hectares of agricultural land across Terai region',
+      'Anomaly alerts helped identify drought stress 2–3 weeks earlier than field reports',
+      'Interface accessible to non-technical users with no GIS background required'
+    ],
+    metrics: [{ val: '120K', label: 'Hectares' }, { val: '3', label: 'Districts' }, { val: '4', label: 'Indices' }, { val: 'Real-time', label: 'Updates' }],
+    stack: [
+      { label: 'Backend', val: 'Google Earth Engine' },
+      { label: 'Frontend', val: 'Leaflet.js + Chart.js' },
+      { label: 'Imagery', val: 'Sentinel-2 L2A' },
+      { label: 'Indices', val: 'NDVI, EVI, SAVI, LAI' }
+    ],
+    pipeline: [
+      { icon: '🛰️', label: 'Sentinel-2' },
+      { icon: '☁️', label: 'Cloud Masking' },
+      { icon: '📊', label: 'Index Calc' },
+      { icon: '🚨', label: 'Anomaly Alert' },
+      { icon: '💻', label: 'Web Dashboard' }
+    ]
+  }
+];
+
+// ─── ROUTING ────────────────────────────────────────────────
+let currentProject = null;
+
+function showHome() {
+  document.getElementById('page-home').classList.add('active');
+  document.getElementById('page-project').classList.remove('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  initReveal();
+}
+
+function showProject(id) {
+  const p = projects.find(x => x.id === id);
+  if (!p) return;
+  currentProject = p;
+  document.getElementById('page-home').classList.remove('active');
+  document.getElementById('page-project').classList.add('active');
+  renderProjectPage(p);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollTo(selector) {
+  setTimeout(() => {
+    const el = document.querySelector(selector);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+// ─── RENDER HOME PROJECT LIST ────────────────────────────────
+function renderProjectList() {
+  const list = document.getElementById('projects-list');
+  list.innerHTML = projects.map(p => `
+    <div class="project-row" onclick="showProject('${p.id}')">
+      <div class="project-num-badge">${p.num}</div>
+      <div>
+        <div class="project-title">${p.title}</div>
+        <div class="project-desc">${p.short}</div>
+        <div class="project-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+  `).join('');
+}
+
+// ─── RENDER PROJECT DETAIL ───────────────────────────────────
+function renderProjectPage(p) {
+  const nextIdx = (projects.indexOf(p) + 1) % projects.length;
+  const next = projects[nextIdx];
+
+  document.getElementById('project-detail-content').innerHTML = `
+    <!-- HERO -->
+    <div class="project-hero">
+      <button class="back-btn" onclick="showHome()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Projects
+      </button>
+      <div class="project-hero-meta">
+        <span class="project-num-label">Project ${p.num}</span>
+        <span class="project-status">${p.status}</span>
+        <span class="project-num-label">${p.year}</span>
+      </div>
+      <h1>${p.title}</h1>
+      <p class="project-hero-sub">${p.short}</p>
+      <div class="project-hero-tags">${p.tags.map(t => `<span class="tag-lg">${t}</span>`).join('')}</div>
+    </div>
+
+    <!-- PIPELINE VISUAL -->
+    <div class="project-vis">
+      ${p.pipeline.map((step, i) => `
+        <div class="vis-step">
+          <div class="vis-icon">${step.icon}</div>
+          <div class="vis-label">${step.label}</div>
+        </div>
+        ${i < p.pipeline.length - 1 ? '<div class="vis-arrow">→</div>' : ''}
+      `).join('')}
+    </div>
+
+    <!-- BODY -->
+    <div class="project-body-grid">
+      <div class="project-content">
+        <h3>Overview</h3>
+        <p>${p.overview}</p>
+
+        <h3>The Challenge</h3>
+        <p>${p.challenge}</p>
+
+        <h3>Approach</h3>
+        <ul>${p.approach.map(a => `<li>${a}</li>`).join('')}</ul>
+
+        <h3>Results</h3>
+        <ul>${p.results.map(r => `<li>${r}</li>`).join('')}</ul>
+      </div>
+
+      <div class="project-sidebar">
+        <!-- Metrics -->
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Key Metrics</div>
+          <div class="metric-grid">
+            ${p.metrics.map(m => `
+              <div class="metric-item">
+                <div class="metric-val">${m.val}</div>
+                <div class="metric-label">${m.label}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Project Info -->
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Project Info</div>
+          <div class="meta-row"><span class="meta-label">Year</span><span class="meta-val">${p.year}</span></div>
+          <div class="meta-row"><span class="meta-label">Role</span><span class="meta-val">${p.role}</span></div>
+          <div class="meta-row"><span class="meta-label">Domain</span><span class="meta-val">${p.domain}</span></div>
+          <div class="meta-row"><span class="meta-label">Status</span><span class="meta-val">${p.status}</span></div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Tech Stack</div>
+          ${p.stack.map(s => `
+            <div class="meta-row">
+              <span class="meta-label">${s.label}</span>
+              <span class="meta-val">${s.val}</span>
+            </div>
+          `).join('')}
+        </div>
+
+        <button class="btn btn-accent" onclick="showHome(); scrollTo('#contact')" style="width:100%;text-align:center;">
+          Discuss This Project →
+        </button>
+      </div>
+    </div>
+
+    <!-- NEXT PROJECT -->
+    <div class="next-project" onclick="showProject('${next.id}')">
+      <div>
+        <div class="next-label">Next Project</div>
+        <div class="next-title">${next.title}</div>
+      </div>
+      <div class="next-arrow">→</div>
+    </div>
+
+    <footer style="background:var(--ink);color:rgba(255,255,255,0.4);padding:2rem 5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;">
+      <button class="footer-logo" onclick="showHome()" style="font-family:'DM Serif Display',serif;color:white;background:none;border:none;cursor:pointer;font-size:1rem;">GeoAI Engineer</button>
+      <span>Kathmandu, Nepal</span>
+      <span>© 2026</span>
+    </footer>
+  `;
+}
+
+// ─── SCROLL REVEAL ───────────────────────────────────────────
+function initReveal() {
+  const els = document.querySelectorAll('#page-home .reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(el => { el.classList.remove('visible'); io.observe(el); });
+}
+
+// ─── INIT ────────────────────────────────────────────────────
+renderProjectList();
+initReveal();
+</script>
+</body>
+</html>
